@@ -1,62 +1,15 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-int invcount = 0;
+int main() {
+    vector<int> A = {7, 10, 4, 3, 20, 15};
+    int k = 3;
 
-void merge(vector<int> &vec,int left,int mid,int right){
-    vector<int> temp(vec.size(),0);
-    int k = left;
-    for(k;k<=right;k++){
-        temp[k] = vec[k];
-    }
-    int l = left;
-    int r = mid+1;
-    int i = left;
-    while(i<vec.size() && l<=mid && r<=right){
-        if(temp[l]<=temp[r]){
-            vec[i] = temp[l];
-            l++;
-            i+=1;
-        }
-        else{
-            vec[i] = temp[r];
-            r++;
-            invcount+=(mid - l + 1);
-            i++;
-        }
-    }
-    while(l<=mid){
-        vec[i] = temp[l];
-        l+=1;
-        i+=1;
-    }
-    while(r<=right){
-        vec[i] = temp[r];
-        r++;
-        i++;
+    priority_queue<int, vector<int>, greater<int>> minHeap(A.begin(), A.end()); 
+
+    for(int i = 0; i < k-1; i++) {
+        minHeap.pop();
     }
 
-
-}
-
-void mergesort(vector<int> &vec,int st,int en){
-
-    if(st<en){
-        int mid = (st+en)/2;
-        mergesort(vec,st,mid);
-        mergesort(vec,mid+1,en);
-        merge(vec,st,mid,en);
-
-    }
-
-}
-
-int main(){
-    vector<int> vec={2,4,1,3,5};
-    int st = 0;
-    int en = vec.size()-1;
-    mergesort(vec,st,en);
-    cout<<invcount<<endl;
-    return 0;
+    cout << minHeap.top() << endl;
 }
